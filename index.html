@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jogja One Stop Maps adalah platform WebGIS wisata alam Yogyakarta untuk mengeksplorasi destinasi, kategori wisata, dan insight berbasis lokasi.">
+  <meta name="theme-color" content="#0B2E26">
+  <meta property="og:title" content="Jogja One Stop Maps">
+  <meta property="og:description" content="Platform WebGIS wisata alam Yogyakarta untuk mengeksplorasi destinasi, kategori wisata, dan insight berbasis lokasi.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
+  <title>Jogja One Stop Maps</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="landing-page">
+  <header class="navbar" id="navbar">
+    <nav class="nav-container" aria-label="Main navigation">
+      <a href="#home" class="logo" aria-label="Jogja One Stop Maps Home">
+        <span class="logo-mark">JM</span>
+        <span>Jogja One Stop Maps</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link active">Beranda</a></li>
+        <li><a href="#destinations" class="nav-link">Destinasi</a></li>
+        <li><a href="#insight" class="nav-link">Insight</a></li>
+        <li><a href="map.html" class="nav-link">Peta</a></li>
+        <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+        <li><a href="#contact" class="nav-link">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-label="Jogja One Stop Maps hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="hero-badge animate-hero">WebGIS Wisata Alam DIY</p>
+        <h1 class="hero-title animate-hero">Jogja One Stop Maps</h1>
+        <p class="hero-subtitle animate-hero">Platform WebGIS untuk mengeksplorasi wisata alam Yogyakarta berbasis lokasi, kategori, rating, biaya masuk, dan insight spasial.</p>
+        <div class="hero-actions animate-hero" aria-label="Hero actions">
+          <a href="map.html" class="btn btn-primary">Buka Peta Interaktif</a>
+          <a href="#destinations" class="btn btn-ghost">Jelajahi Destinasi</a>
+        </div>
+      </div>
+      <div class="hero-bottom-note" aria-hidden="true">
+        <span>Pantai Selatan</span>
+        <span>Perbukitan</span>
+        <span>Karst</span>
+        <span>Hutan</span>
+      </div>
+    </section>
+
+    <section class="section intro" id="problem-solution">
+      <div class="container intro-layout">
+        <div class="section-copy reveal">
+          <p class="section-kicker">MENGAPA JOGJA ONE STOP MAPS?</p>
+          <h2 class="section-title">Satu peta untuk membaca wisata alam Jogja.</h2>
+          <p class="section-lead">
+            Informasi wisata alam di Yogyakarta sering tersebar di banyak platform, mulai dari media sosial, artikel, hingga peta digital. Akibatnya, pengguna perlu membuka beberapa sumber untuk membandingkan lokasi, kategori wisata, biaya masuk, rating, dan akses menuju destinasi.
+          </p>
+          <p>
+            Jogja One Stop Maps menyatukan data destinasi, atribut wisata, dan visualisasi spasial dalam satu WebGIS interaktif. Pengguna dapat mencari destinasi, membaca pola persebaran, melihat detail lokasi, dan langsung melanjutkan rute melalui Google Maps.
+          </p>
+        </div>
+
+        <div class="solution-mini-grid reveal">
+          <article class="audience-card solution-card">
+            <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>
+            <strong>Data destinasi</strong>
+            <p>Kategori, rating, HTM, deskripsi, dan lokasi wisata disajikan dalam format yang mudah dibaca.</p>
+          </article>
+          <article class="audience-card solution-card">
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            <strong>Peta interaktif</strong>
+            <p>Marker, filter, legenda, dan basemap membantu pengguna memahami persebaran destinasi.</p>
+          </article>
+          <article class="audience-card solution-card">
+            <i class="fa-solid fa-route" aria-hidden="true"></i>
+            <strong>Akses rute cepat</strong>
+            <p>Setiap destinasi dapat dibuka langsung menuju Google Maps untuk kebutuhan navigasi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product-value" id="value">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">NILAI UNTUK PENGGUNA</p>
+          <h2 class="section-title">Dirancang untuk wisatawan, pengelola, dan analisis wilayah.</h2>
+          <p class="section-lead">Jogja One Stop Maps tidak hanya menampilkan daftar tempat, tetapi membantu pengguna memahami destinasi berdasarkan lokasi, atribut wisata, dan konteks spasial.</p>
+        </div>
+
+        <div class="value-grid value-grid-three">
+          <article class="value-card reveal">
+            <span class="value-number">01</span>
+            <i class="fa-solid fa-person-walking-luggage" aria-hidden="true"></i>
+            <h3>Untuk wisatawan</h3>
+            <p>Temukan destinasi wisata alam berdasarkan lokasi, kategori, rating, dan biaya masuk sebelum menentukan tujuan perjalanan.</p>
+          </article>
+          <article class="value-card reveal">
+            <span class="value-number">02</span>
+            <i class="fa-solid fa-store" aria-hidden="true"></i>
+            <h3>Untuk pengelola wisata</h3>
+            <p>Bantu destinasi lokal lebih mudah ditemukan melalui platform berbasis lokasi yang terhubung dengan peta digital.</p>
+          </article>
+          <article class="value-card reveal">
+            <span class="value-number">03</span>
+            <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+            <h3>Untuk akademik dan pemerintah</h3>
+            <p>Dukung pembacaan pola persebaran wisata sebagai dasar awal untuk analisis wilayah dan perencanaan pariwisata.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section destinations" id="destinations">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">DESTINASI UNGGULAN</p>
+          <span class="data-status">Data destinasi terstruktur</span>
+          <h2 class="section-title">Destinasi wisata alam DIY.</h2>
+          <p class="section-lead">Data destinasi dibaca dari CSV dan ditampilkan sebagai kartu wisata dari beberapa kabupaten di DIY untuk eksplorasi awal sebelum melihat persebarannya pada peta interaktif.</p>
+        </div>
+
+        <div class="destination-tools reveal">
+          <label class="search-field" for="destinationSearch">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" id="destinationSearch" placeholder="Cari destinasi" autocomplete="off">
+          </label>
+
+          <label class="filter-field" for="categoryFilter">
+            <span>Kategori</span>
+            <select id="categoryFilter">
+              <option value="all">Semua kategori</option>
+            </select>
+          </label>
+
+          <label class="filter-field" for="regionFilter">
+            <span>Wilayah</span>
+            <select id="regionFilter">
+              <option value="all">Semua wilayah</option>
+            </select>
+          </label>
+
+          <button class="filter-reset" id="resetFilter" type="button">Reset Filter</button>
+          <p class="result-count" id="destinationCount">Memuat destinasi...</p>
+        </div>
+
+        <div class="destination-grid" id="destinationGrid" aria-live="polite"></div>
+        <p class="empty-state" id="destinationEmpty" hidden>Tidak ada destinasi yang sesuai. Coba ubah kata kunci atau filter.</p>
+      </div>
+    </section>
+
+    <section class="section insight" id="insight">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">INSIGHT WISATA</p>
+          <span class="preview-badge">Dihitung dari data destinasi</span>
+          <h2 class="section-title">Insight cepat dari data destinasi.</h2>
+          <p class="section-lead">Ringkasan ini dihitung dari data destinasi untuk membantu membaca jumlah data, kategori dominan, wilayah dominan, dan rata-rata rating secara cepat.</p>
+        </div>
+
+        <div class="insight-grid">
+          <article class="insight-card reveal">
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            <span>Total Destinasi</span>
+            <strong id="totalDestinations">-</strong>
+          </article>
+          <article class="insight-card reveal">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            <span>Kategori Dominan</span>
+            <strong id="dominantCategory">-</strong>
+          </article>
+          <article class="insight-card reveal">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Wilayah Dominan</span>
+            <strong id="topRegion">-</strong>
+          </article>
+          <article class="insight-card reveal">
+            <i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i>
+            <span>Rata-rata Rating</span>
+            <strong id="averageRating">-</strong>
+          </article>
+        </div>
+
+        <p class="insight-note reveal">Angka insight dihitung dari data destinasi dan dapat diperluas untuk analisis spasial lanjutan.</p>
+      </div>
+    </section>
+
+    <section class="section webgis-preview" id="webgis-preview">
+      <div class="container preview-layout">
+        <div class="section-copy reveal">
+          <p class="section-kicker">DASHBOARD PETA INTERAKTIF</p>
+          <h2 class="section-title">Peta interaktif untuk eksplorasi berbasis lokasi.</h2>
+          <p class="section-lead">
+            Gunakan peta untuk memfilter destinasi, melihat marker kategori, membuka detail wisata, membaca legenda, dan melanjutkan rute melalui Google Maps.
+          </p>
+          <p>
+            Dashboard peta dirancang agar pengguna dapat memahami persebaran destinasi secara visual, bukan hanya melalui daftar tempat.
+          </p>
+
+          <div class="roadmap-list" aria-label="Fitur dashboard peta">
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Marker kategori</span>
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Filter pintar</span>
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Legenda peta</span>
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Basemap</span>
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Google Maps</span>
+            <span><i class="fa-solid fa-check" aria-hidden="true"></i> Insight spasial</span>
+          </div>
+          <a href="map.html" class="btn btn-primary preview-cta">Buka Dashboard Peta</a>
+        </div>
+
+        <div class="map-mockup reveal" aria-label="Preview dashboard peta interaktif">
+          <div class="mockup-toolbar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="mockup-grid">
+            <span class="fake-route"></span>
+            <span class="mock-node node-one"></span>
+            <span class="mock-node node-two"></span>
+            <span class="mock-node node-three"></span>
+            <div class="dashboard-teaser-card">
+              <i class="fa-solid fa-map" aria-hidden="true"></i>
+              <strong>Dashboard peta interaktif</strong>
+              <span>Marker kategori, filter, legenda, dan navigasi lokasi dalam satu pengalaman visual.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section roadmap-section" id="roadmap">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">ROADMAP &amp; KEPERCAYAAN DATA</p>
+          <h2 class="section-title">Dari data wisata menuju platform geospasial pariwisata.</h2>
+          <p class="section-lead">
+            Jogja One Stop Maps dirancang sebagai platform WebGIS wisata yang dapat diperluas dengan data lengkap, foto destinasi, validasi koordinat, dan layer spasial tambahan.
+          </p>
+        </div>
+
+        <div class="roadmap-trust-layout">
+          <div class="roadmap-timeline">
+            <article class="roadmap-step reveal">
+              <span class="roadmap-step-number">01</span>
+              <div>
+                <h3>Data destinasi &amp; peta interaktif</h3>
+                <p>Menampilkan destinasi wisata, atribut dasar, marker kategori, filter, dan tautan Google Maps.</p>
+              </div>
+            </article>
+            <article class="roadmap-step reveal">
+              <span class="roadmap-step-number">02</span>
+              <div>
+                <h3>Perluasan data seluruh DIY</h3>
+                <p>Menambahkan destinasi dari kabupaten/kota lain, foto, fasilitas, jam operasional, dan informasi pendukung.</p>
+              </div>
+            </article>
+            <article class="roadmap-step reveal">
+              <span class="roadmap-step-number">03</span>
+              <div>
+                <h3>Layer spasial dan database geografi</h3>
+                <p>Mengintegrasikan GeoJSON, batas administrasi, jaringan jalan, dan database spasial seperti PostgreSQL/PostGIS.</p>
+              </div>
+            </article>
+            <article class="roadmap-step reveal">
+              <span class="roadmap-step-number">04</span>
+              <div>
+                <h3>Analytics dan kemitraan wisata</h3>
+                <p>Mengembangkan insight pengguna, promosi UMKM sekitar wisata, rekomendasi rute, dan peluang kerja sama destinasi.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="trust-feature-grid">
+            <article class="model-card trust-feature-card reveal">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+              <h3>Validasi data</h3>
+              <p>Data dapat diperbarui dan divalidasi dari sumber resmi, pengelola wisata, atau survei lapangan.</p>
+            </article>
+            <article class="model-card trust-feature-card reveal">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+              <h3>Sistem koordinat</h3>
+              <p>Data lokasi menggunakan WGS 84 / EPSG:4326 agar kompatibel dengan WebGIS dan peta digital.</p>
+            </article>
+            <article class="model-card trust-feature-card reveal">
+              <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+              <h3>Pengembangan bertahap</h3>
+              <p>Struktur data dapat diperluas menuju dashboard admin, analytics, dan integrasi layer spasial.</p>
+            </article>
+            <article class="model-card trust-feature-card reveal">
+              <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+              <h3>Mengapa WebGIS?</h3>
+              <p>WebGIS membantu menyajikan informasi wisata dalam bentuk peta sehingga hubungan antara lokasi, kategori, akses, dan konteks wilayah lebih mudah dipahami.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="destination-modal" id="destinationModal" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <section class="destination-modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+      <button class="modal-close" type="button" aria-label="Tutup detail destinasi" data-modal-close>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="modal-content" id="modalContent"></div>
+    </section>
+  </div>
+
+  <div class="copy-toast" id="copyToast" role="status" aria-live="polite">Koordinat berhasil disalin</div>
+
+  <footer class="footer" id="contact">
+    <div class="container footer-layout">
+      <div>
+        <a href="#home" class="footer-logo">Jogja One Stop Maps</a>
+        <p>Visualisasi geospasial untuk eksplorasi wisata alam Yogyakarta.</p>
+      </div>
+
+      <div class="footer-info">
+        <p>Teknik Geomatika UPN "Veteran" Yogyakarta</p>
+        <p>Tahun 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
