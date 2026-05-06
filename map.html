@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Peta Wisata Interaktif Jogja One Stop Maps untuk eksplorasi persebaran wisata alam DIY berdasarkan data CSV.">
+  <meta name="theme-color" content="#0B2E26">
+  <meta property="og:title" content="Jogja One Stop Maps - Peta Wisata Interaktif">
+  <meta property="og:description" content="Peta interaktif persebaran wisata alam DIY berdasarkan data CSV.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80">
+  <title>Peta Wisata Interaktif | Jogja One Stop Maps</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="map-page map-dashboard-page">
+  <header class="map-topbar" id="mapNavbar">
+    <div class="map-topbar-inner">
+      <a href="index.html" class="map-brand" aria-label="Jogja One Stop Maps Home">
+        <span class="map-brand-mark">JM</span>
+        <span class="map-brand-copy">
+          <strong>Jogja One Stop Maps</strong>
+          <small>Peta Wisata Interaktif</small>
+        </span>
+      </a>
+
+      <div class="map-topbar-actions">
+        <a href="index.html" class="map-topbar-link">Beranda</a>
+        <a href="index.html#destinations" class="map-topbar-link">Destinasi</a>
+        <button class="map-topbar-button" id="mapResetViewButton" type="button" aria-label="Reset tampilan peta">Reset Tampilan</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="map-dashboard">
+    <aside class="map-sidebar-left">
+      <div class="map-sidebar-scroll">
+        <button class="map-mobile-sheet-close" id="mapMobileSheetClose" type="button" aria-label="Tutup filter">
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="map-panel-heading">
+          <p class="map-panel-kicker">KONTROL WEBGIS</p>
+          <h1>Peta Wisata Interaktif</h1>
+        </div>
+
+        <details class="map-panel-card map-filter-panel" data-mobile-collapse open>
+          <summary class="map-data-table-summary">
+            <span class="map-info-title-group">
+              <strong>FILTER PINTAR</strong>
+            </span>
+            <span class="map-info-toggle">Detail</span>
+          </summary>
+          <div class="map-panel-card-body">
+            <div class="map-filter-stack">
+              <label class="search-field" for="mapSearch">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="search" id="mapSearch" placeholder="Cari destinasi / wilayah / kata kunci" autocomplete="off" aria-label="Cari destinasi">
+              </label>
+
+              <label class="filter-field" for="mapRegionFilter">
+                <select id="mapRegionFilter">
+                  <option value="all">Semua Wilayah</option>
+                </select>
+              </label>
+
+              <label class="filter-field" for="mapSortFilter">
+                <select id="mapSortFilter" aria-label="Urutkan destinasi">
+                  <option value="rating-desc">Urut: Rating Tertinggi</option>
+                  <option value="rating-asc">Urut: Rating Terendah</option>
+                  <option value="name-asc">Urut: Nama A-Z</option>
+                  <option value="name-desc">Urut: Nama Z-A</option>
+                  <option value="price-asc">Urut: HTM Terendah</option>
+                  <option value="price-desc">Urut: HTM Tertinggi</option>
+                </select>
+              </label>
+
+              <div class="map-category-filter" aria-labelledby="mapCategoryLabel">
+                <p id="mapCategoryLabel">Kategori (Multi-Select)</p>
+                <div class="map-category-grid" id="mapCategoryOptions"></div>
+              </div>
+
+              <div class="map-rating-filter">
+                <div class="map-rating-row">
+                  <span>Rating Minimum</span>
+                  <strong id="mapRatingValue">0.0</strong>
+                </div>
+                <input type="range" id="mapRatingFilter" min="0" max="5" step="0.1" value="0" aria-label="Rating minimum">
+              </div>
+
+              <div class="map-filter-actions">
+                <button class="map-filter-apply" id="mapApplyButton" type="button" aria-label="Terapkan filter">Terapkan</button>
+                <button class="filter-reset" id="mapResetButton" type="button" aria-label="Reset filter destinasi">Reset</button>
+                <button class="map-filter-clear" id="mapClearButton" type="button" aria-label="Kosongkan filter">Kosongkan</button>
+              </div>
+
+              <p class="result-count" id="mapMarkerCount">Memuat destinasi...</p>
+            </div>
+
+            <div class="map-summary-heading">
+              <strong>RINGKASAN</strong>
+            </div>
+            <div class="map-summary-panel">
+              <div class="map-summary-item">
+                <span>Total Destinasi</span>
+                <strong id="mapTotalDestinations">-</strong>
+                <small>titik</small>
+              </div>
+              <div class="map-summary-item">
+                <span>Rata-rata Rating</span>
+                <strong id="mapAverageRating">-</strong>
+                <small>/5.0</small>
+              </div>
+              <div class="map-summary-item">
+                <span>Wilayah Aktif</span>
+                <strong id="mapDominantRegion">-</strong>
+                <small>wilayah</small>
+              </div>
+              <div class="map-summary-item">
+                <span>Kategori Aktif</span>
+                <strong id="mapDominantCategory">-</strong>
+                <small>kategori</small>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="map-panel-card map-info-stack-card" data-mobile-collapse>
+          <summary class="map-data-table-summary">
+            <span class="map-info-title-group">
+              <strong>Info Data & Legenda</strong>
+              <small>Legenda dan informasi data</small>
+            </span>
+            <span class="map-info-toggle">Detail</span>
+          </summary>
+          <div class="map-panel-card-body map-info-stack-body">
+            <details class="map-info-card map-interpretation-card" data-mobile-collapse open>
+              <summary class="map-info-card-header">
+                <h2 id="mapInterpretationTitle">Interpretasi Spasial</h2>
+                <span>Insight GIS</span>
+              </summary>
+              <div class="map-info-card-body">
+                <p class="map-insight-copy">
+                  Sebaran destinasi pada data saat ini menunjukkan variasi wisata alam di Sleman, Bantul, Kulon Progo, dan Gunung Kidul. Pola tersebut mencerminkan bentang alam DIY yang beragam, mulai dari kawasan vulkanik, karst, pantai, sungai, hingga hutan dan perbukitan.
+                </p>
+                <p class="map-insight-copy map-insight-copy-secondary">
+                  Pada tahap pengembangan berikutnya, data dapat diperluas dengan batas administrasi, jaringan jalan, dan kategori wisata lain untuk mendukung analisis aksesibilitas.
+                </p>
+              </div>
+            </details>
+
+            <details class="map-info-card map-spatial-card" data-mobile-collapse open>
+              <summary class="map-info-card-header">
+                <h2>Insight Koordinat</h2>
+                <span>Dihitung dari Lat/Long</span>
+              </summary>
+              <div class="map-coordinate-grid">
+                <div class="map-coordinate-item">
+                  <span>Marker Valid</span>
+                  <strong id="mapValidMarkers">-</strong>
+                </div>
+                <div class="map-coordinate-item">
+                  <span>Pusat Sebaran</span>
+                  <strong id="mapCentroid">-</strong>
+                </div>
+                <div class="map-coordinate-item">
+                  <span>Terdekat Pusat</span>
+                  <strong id="mapNearestToCenter">-</strong>
+                </div>
+                <div class="map-coordinate-item">
+                  <span>Jarak Rata-rata</span>
+                  <strong id="mapAverageDistance">-</strong>
+                </div>
+              </div>
+            </details>
+
+            <details class="map-info-card map-meta-card" data-mobile-collapse open>
+              <summary class="map-info-card-header">
+                <span class="map-info-title-group">
+                  <strong>Metadata Data</strong>
+                  <small>Konteks dataset saat ini</small>
+                </span>
+                <span class="map-info-toggle">Detail</span>
+              </summary>
+              <div class="map-meta-list">
+                <div class="map-meta-item">
+                  <span>Sumber data</span>
+                  <strong>Kompilasi data destinasi wisata alam DIY</strong>
+                </div>
+                <div class="map-meta-item">
+                  <span>Sumber koordinat</span>
+                  <strong>CSV destinasi / Google Maps reference</strong>
+                </div>
+                <div class="map-meta-item">
+                  <span>Sistem koordinat</span>
+                  <strong>WGS 84 / EPSG:4326</strong>
+                </div>
+                <div class="map-meta-item">
+                  <span>Cakupan saat ini</span>
+                  <strong>Destinasi wisata alam beberapa kabupaten di DIY</strong>
+                </div>
+                <div class="map-meta-item">
+                  <span>Format data</span>
+                  <strong>CSV dengan kolom Lat dan Long</strong>
+                </div>
+                <div class="map-meta-item">
+                  <span>Status data</span>
+                  <strong>Data destinasi untuk platform WebGIS wisata</strong>
+                </div>
+              </div>
+              <p class="map-meta-note">
+                Data saat ini merupakan kompilasi destinasi wisata alam dari beberapa kabupaten di DIY. Data kabupaten, kategori, dan atribut lain dapat terus diperluas pada tahap berikutnya.
+              </p>
+              <p class="map-meta-note map-meta-note-soft">
+                Koordinat merupakan titik representatif destinasi dan dapat berbeda sedikit dari titik label resmi Google Maps.
+              </p>
+              <p class="map-meta-note map-meta-note-soft">
+                Layer batas administrasi DIY dan jaringan pendukung dapat ditambahkan pada pengembangan berikutnya.
+              </p>
+              <p class="map-development-note">
+                Platform WebGIS wisata untuk visualisasi wisata alam. Data dapat diperbarui pada tahap pengembangan berikutnya.
+              </p>
+            </details>
+          </div>
+        </details>
+      </div>
+    </aside>
+
+    <section class="map-stage">
+      <div class="map-stage-card">
+        <div class="map-mobile-ui">
+          <label class="map-mobile-search search-field" for="mapSearchMobile">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" id="mapSearchMobile" placeholder="Cari destinasi" autocomplete="off" aria-label="Cari destinasi dari peta">
+          </label>
+          <div class="map-mobile-category-strip" id="mapMobileCategoryChips" aria-label="Kategori utama destinasi"></div>
+          <button class="map-mobile-fab map-mobile-filter-toggle" id="mapMobileFilterToggle" type="button" aria-label="Buka filter peta">
+            <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+            <span>Filter</span>
+          </button>
+          <button class="map-mobile-fab map-mobile-reset" id="mapMobileResetButton" type="button" aria-label="Reset tampilan peta">
+            <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="map-north-arrow" aria-hidden="true">
+          <span class="map-north-arrow-label">N</span>
+          <span class="map-north-arrow-icon"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i></span>
+        </div>
+        <button class="map-drawer-toggle" id="mapDrawerToggle" type="button" aria-controls="mapDestinationDrawer" aria-expanded="false">
+          <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+          <span>Daftar Destinasi</span>
+        </button>
+        <details class="map-floating-legend">
+          <summary aria-label="Buka legenda marker">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            <span>Legenda</span>
+          </summary>
+          <div class="map-floating-legend-panel">
+            <div class="map-floating-legend-head">
+              <strong>Legenda Marker</strong>
+              <small>Kategori wisata</small>
+            </div>
+            <div class="map-legend-list" id="mapLegendList">
+              <div class="map-legend-item is-active" data-category="pantai">
+                <span class="map-legend-swatch tourism-category-marker category-beach"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Pantai</strong>
+                  <small>Aktif</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="gunung">
+                <span class="map-legend-swatch tourism-category-marker category-mountain"><i class="fa-solid fa-mountain" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Gunung</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="hutan">
+                <span class="map-legend-swatch tourism-category-marker category-forest"><i class="fa-solid fa-tree" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Hutan</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="goa">
+                <span class="map-legend-swatch tourism-category-marker category-cave"><i class="fa-solid fa-archway" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Goa</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="air terjun">
+                <span class="map-legend-swatch tourism-category-marker category-waterfall"><i class="fa-solid fa-droplet" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Air Terjun</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="bukit">
+                <span class="map-legend-swatch tourism-category-marker category-hill"><i class="fa-solid fa-mountain-sun" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Bukit</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="sungai">
+                <span class="map-legend-swatch tourism-category-marker category-water"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Sungai</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="waduk">
+                <span class="map-legend-swatch tourism-category-marker category-water"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Waduk</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="air">
+                <span class="map-legend-swatch tourism-category-marker category-water"><i class="fa-solid fa-water" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Air</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="perkebunan">
+                <span class="map-legend-swatch tourism-category-marker category-plantation"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Perkebunan</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="geologi">
+                <span class="map-legend-swatch tourism-category-marker category-geology"><i class="fa-solid fa-mountain" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Geologi</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+              <div class="map-legend-item" data-category="lainnya">
+                <span class="map-legend-swatch tourism-category-marker category-default"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span>
+                <div>
+                  <strong>Lainnya</strong>
+                  <small>Tersedia</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div id="tourismMap" class="tourism-map" aria-label="Peta wisata interaktif"></div>
+        <div class="map-selected-card" id="mapSelectedCard" hidden aria-live="polite"></div>
+      </div>
+    </section>
+
+    <aside class="map-sidebar-right map-destination-drawer" id="mapDestinationDrawer" aria-hidden="true" aria-labelledby="mapDrawerTitle">
+      <div class="map-sidebar-scroll map-drawer-scroll">
+        <div class="map-drawer-header">
+          <span class="map-info-title-group">
+            <strong id="mapDrawerTitle">Daftar Destinasi</strong>
+            <small>Klik destinasi untuk memperbesar lokasi.</small>
+          </span>
+          <button class="map-drawer-close" id="mapDrawerClose" type="button" aria-label="Tutup daftar destinasi">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <section class="map-list-card map-drawer-list-card" aria-labelledby="mapDrawerTitle">
+          <div class="map-panel-card-body map-list-card-body">
+            <div class="map-destination-list" id="mapDestinationList" aria-live="polite"></div>
+            <p class="empty-state map-empty-state" id="mapEmptyState" hidden>Tidak ada destinasi yang sesuai. Coba ubah kata kunci atau filter.</p>
+          </div>
+        </section>
+
+        <p class="map-mobile-drawer-note" id="mapMobileDrawerNote">
+          Tabel data disembunyikan di mobile agar navigasi lebih ringan. Gunakan daftar destinasi untuk memilih lokasi, lalu buka desktop bila perlu membaca tabel lengkap.
+        </p>
+
+        <details class="map-data-table-card" data-mobile-collapse>
+          <summary class="map-data-table-summary">
+            <span class="map-info-title-group">
+              <strong>Tabel Data</strong>
+              <small>Data destinasi terfilter</small>
+            </span>
+            <span class="map-info-toggle">Detail</span>
+          </summary>
+          <div class="map-table-shell">
+            <div class="map-table-wrap">
+              <table class="map-data-table" aria-label="Tabel data destinasi terfilter">
+                <thead>
+                  <tr>
+                    <th>Nama Wisata</th>
+                    <th>Kategori</th>
+                    <th>Kabupaten</th>
+                    <th>Rating</th>
+                    <th>HTM</th>
+                  </tr>
+                </thead>
+                <tbody id="mapDataTableBody"></tbody>
+              </table>
+            </div>
+            <p class="empty-state map-empty-state map-table-empty" id="mapTableEmpty" hidden>Tidak ada destinasi yang sesuai. Coba ubah kata kunci atau filter.</p>
+          </div>
+        </details>
+      </div>
+    </aside>
+  </main>
+
+  <div class="map-mobile-sheet-backdrop" id="mapFilterBackdrop" hidden></div>
+  <div class="map-drawer-backdrop" id="mapDrawerBackdrop" hidden></div>
+  <div class="map-copy-toast" id="mapCopyToast" hidden aria-live="polite" role="status">Koordinat berhasil disalin.</div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="map.js"></script>
+</body>
+</html>
